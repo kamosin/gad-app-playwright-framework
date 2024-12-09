@@ -4,6 +4,8 @@ import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
 
+import java.time.Duration;
+
 public class RegistrationPage {
 
     private final Page page;
@@ -17,6 +19,7 @@ public class RegistrationPage {
     Locator passwordInput;
     Locator imageSelector;
     Locator registerButton;
+    Locator alertPopup;
 
     Locator firstNameValidation;
     Locator lastNameValidation;
@@ -34,7 +37,8 @@ public class RegistrationPage {
         this.datePickerDoneButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Done"));
         this.passwordInput = page.getByPlaceholder("Enter Password");
         this.imageSelector = page.locator("select#avatar");
-        this. registerButton = page.getByTestId("register-button");
+        this.registerButton = page.getByTestId("register-button");
+        this.alertPopup = page.locator("#alertPopup");
     }
 
     public void enterFirstName(String firstName){
@@ -71,8 +75,15 @@ public class RegistrationPage {
         selectImage(imageName);
     }
 
-    public void clickRegisterButton(){
-        registerButton.click();
+    public String clickRegisterButton(){
+        page.waitForResponse(
+                response -> response.url().contains("/users") && response.request().method().equals("POST"),
+                () -> {
+                    registerButton.click();
+                    alertPopup.click();
+                }
+        );
+        return alertPopup.textContent();
     }
 
     public String registerWithAllFields(String firstName, String lastName, String email, String date,
@@ -81,8 +92,7 @@ public class RegistrationPage {
         var registrationPage = navigationBar.clickRegisterButton();
         registrationPage.enterAllData(firstName, lastName, email, date,
                 password, imageName);
-        registrationPage.clickRegisterButton();
-        return page.getByRole(AriaRole.ALERT).textContent();
+        return registrationPage.clickRegisterButton();
     }
 
 }

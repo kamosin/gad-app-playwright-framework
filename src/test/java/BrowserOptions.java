@@ -9,7 +9,6 @@ public class BrowserOptions implements OptionsFactory {
     public Options getOptions() {
         return new Options().setLaunchOptions(
                         new BrowserType.LaunchOptions()
-                                .setArgs(List.of("--start-fullscreen"))
                 ).setHeadless(false)
                 .setTestIdAttribute("data-testid")
                 .setBaseUrl("http://localhost:3001");
