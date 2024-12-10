@@ -1,3 +1,5 @@
+package guitests;
+
 import api.models.User;
 import com.microsoft.playwright.BrowserContext;
 import com.microsoft.playwright.Page;
