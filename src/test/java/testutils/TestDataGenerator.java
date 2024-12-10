@@ -1,5 +1,6 @@
 package testutils;
 
+import api.models.ArticleRequest;
 import api.models.User;
 import com.github.javafaker.Faker;
 
@@ -51,7 +52,7 @@ public class TestDataGenerator {
         return Instant.now().truncatedTo(ChronoUnit.MILLIS).toString();
     }
 
-//    public static ArticleRequest generateArticle(){
-//        return new ArticleRequest(generateArticleTitle(), generateText(150), currentDate(), ReusableData.articlePictureName);
-//    }
+    public static ArticleRequest generateArticle(){
+        return new ArticleRequest(generateArticleTitle(), generateText(150), currentDate(), ReusableData.articlePictureName);
+    }
 }

@@ -13,8 +13,12 @@ public class TestUtils {
     public static String getJsonPath(APIResponse response, String key){
         String resp = response.text();
         JsonObject jsonObject = JsonParser.parseString(resp).getAsJsonObject();
-        JsonElement value = jsonObject.get(key);
-        return value != null ? value.getAsString() : null;
+        String[] keys = key.split("\\.");
+        JsonObject current = jsonObject;
+        for (int i = 0; i < keys.length - 1; i++) {
+            current = current.getAsJsonObject(keys[i]);
+        }
+        return current.get(keys[keys.length - 1]).toString().replace("\"", "").trim();
     }
 
     public static String getGlobalValue(String key) {
