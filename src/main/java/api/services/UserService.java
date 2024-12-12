@@ -27,7 +27,7 @@ public class UserService {
     }
 
     public int getNumberOfUsers(){
-        return JsonParser.parseString(getUsers().text()).getAsJsonObject().getAsJsonArray().size();
+        return JsonParser.parseString(getUsers().text()).getAsJsonArray().size();
     }
 
 }

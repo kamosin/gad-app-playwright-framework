@@ -39,6 +39,11 @@ public class RegistrationPage {
         this.imageSelector = page.locator("select#avatar");
         this.registerButton = page.getByTestId("register-button");
         this.alertPopup = page.locator("#alertPopup");
+        this.firstNameValidation = page.locator("#octavalidate_firstname");
+        this.lastNameValidation = page.locator("#octavalidate_lastname");
+        this.emailValidation = page.locator("#octavalidate_email");
+        this.dateValidation = page.locator("#octavalidate_datepicker");
+        this.passwordValidation = page.locator("#octavalidate_password");
     }
 
     public void enterFirstName(String firstName){
@@ -75,24 +80,36 @@ public class RegistrationPage {
         selectImage(imageName);
     }
 
-    public String clickRegisterButton(){
-        page.waitForResponse(
-                response -> response.url().contains("/users") && response.request().method().equals("POST"),
-                () -> {
-                    registerButton.click();
-                    alertPopup.click();
-                }
-        );
-        return alertPopup.textContent();
+    public void clickRegisterButton(){
+        registerButton.click();
     }
 
-    public String registerWithAllFields(String firstName, String lastName, String email, String date,
+    public void registerWithAllFields(String firstName, String lastName, String email, String date,
                                         String password, String imageName) {
         navigationBar = new NavigationBar(page);
         var registrationPage = navigationBar.clickRegisterButton();
         registrationPage.enterAllData(firstName, lastName, email, date,
                 password, imageName);
-        return registrationPage.clickRegisterButton();
+        clickRegisterButton();
     }
 
+    public boolean isFirstNameValidationTextVisible(String text){
+        return firstNameValidation.isVisible() && firstNameValidation.textContent().equals(text);
+    }
+
+    public boolean isLastNameValidationTextVisible(String text){
+        return lastNameValidation.isVisible() && lastNameValidation.textContent().equals(text);
+    }
+
+    public boolean isEmailValidationTextVisible(String text){
+        return emailValidation.isVisible() && emailValidation.textContent().equals(text);
+    }
+
+    public boolean isDateValidationTextVisible(String text){
+        return dateValidation.isVisible() && dateValidation.textContent().equals(text);
+    }
+
+    public boolean isPasswordValidationTextVisible(String text){
+        return passwordValidation.isVisible() && passwordValidation.textContent().equals(text);
+    }
 }
