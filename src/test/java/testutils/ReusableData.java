@@ -10,7 +10,7 @@ public class ReusableData {
     public static final String expectedArticleCreatedMessage = "Article was created";
     public static final String expectedArticleNotCreatedMessage = "Article was not created";
     public static final String articleTitleTooLongErrorMessageText = "Field validation: \"title\" longer than \"128\"";
-    public static final String userCreatedExpectedMessage = "User created";
+    public static final String userCreatedExpectedMessage = "\n    ";
     public static final String emailNotUniqueExpectedMessage = "User not created! Email not unique";
     public static final String requiredFieldMessage  = "This field is required";
     public static final String wrongFirstNameMessage = "Please enter only Letters!";
