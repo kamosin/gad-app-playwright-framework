@@ -3,6 +3,8 @@ package guitests;
 import api.RequestManager;
 import api.models.User;
 import api.services.UserService;
+import com.microsoft.playwright.Page;
+import com.microsoft.playwright.assertions.PlaywrightAssertions;
 import org.junit.jupiter.api.*;
 import pageobjects.LoginPage;
 import pageobjects.MyAccountPage;
@@ -29,9 +31,9 @@ public class RegistrationTests extends BasePlaywrightTest{
         //When
         registrationPage.registerWithAllFields(user.firstname(), user.lastname(), user.email(), user.birthDate(),
                 user.password(), user.avatar());
-        var registrationInfo = CommonActions.getAlertText(page);
+
         //Then
-        assertEquals(ReusableData.userCreatedExpectedMessage, registrationInfo);
+        PlaywrightAssertions.assertThat(page.locator("#alertPopup")).containsText(ReusableData.userCreatedExpectedMessage);
 
         //When
         LoginPage loginPage = new LoginPage(page);
@@ -54,14 +56,11 @@ public class RegistrationTests extends BasePlaywrightTest{
         //When
         registrationPage.registerWithAllFields(user.firstname(), user.lastname(), user.email(), user.birthDate(),
                 user.password(), user.avatar());
-        var registrationInfo = CommonActions.getAlertText(page);
-        assertEquals(ReusableData.userCreatedExpectedMessage, registrationInfo);
+        PlaywrightAssertions.assertThat(page.locator("#alertPopup")).containsText(ReusableData.userCreatedExpectedMessage);
 
         registrationPage.registerWithAllFields(user.firstname(), user.lastname(), user.email(), user.birthDate(),
                 user.password(), user.avatar());
-        registrationInfo = CommonActions.getAlertText(page);
-        //Then
-        assertEquals(ReusableData.emailNotUniqueExpectedMessage, registrationInfo);
+        PlaywrightAssertions.assertThat(page.locator("#alertPopup")).containsText(ReusableData.emailNotUniqueExpectedMessage);
     }
 
     @Test

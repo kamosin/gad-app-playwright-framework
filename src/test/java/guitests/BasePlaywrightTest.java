@@ -1,8 +1,12 @@
 package guitests;
 
+import api.models.User;
 import com.microsoft.playwright.*;
 import org.junit.jupiter.api.*;
+import pageobjects.LoginPage;
 import pageobjects.NavigationBar;
+import pageobjects.RegistrationPage;
+import testutils.TestDataGenerator;
 
 import java.nio.file.Paths;
 import java.util.Arrays;
@@ -56,5 +60,14 @@ public abstract class BasePlaywrightTest {
     static void tearDown() {
         browser.close();
         playwright.close();
+    }
+
+    public User registerAndLogin(){
+        RegistrationPage registrationPage = new RegistrationPage(page);
+        var user = TestDataGenerator.generateUser();
+        registrationPage.registerWithAllFields(user.firstname(), user.lastname(), user.email(), user.birthDate(), user.password(), user.avatar());
+        LoginPage loginPage = new LoginPage(page);
+        loginPage.login(user.email(), user.password());
+        return user;
     }
 }

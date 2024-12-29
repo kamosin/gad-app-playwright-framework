@@ -8,8 +8,9 @@ import com.microsoft.playwright.options.WaitForSelectorState;
 public class CommonActions {
 
     public static String getAlertText(Page page){
-        Locator alertPopup = page.locator("#alertPopup");
-        alertPopup.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
-        return alertPopup.textContent();
+//        Locator alertPopup = page.locator("#alertPopup");
+//        alertPopup.waitFor(new Locator.WaitForOptions().setState(WaitForSelectorState.VISIBLE));
+//        return alertPopup.textContent();
+        return page.locator("#alertPopup").textContent();
     }
 }

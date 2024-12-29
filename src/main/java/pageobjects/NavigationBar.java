@@ -4,6 +4,9 @@ package pageobjects;
 import com.microsoft.playwright.Locator;
 import com.microsoft.playwright.Page;
 import com.microsoft.playwright.options.AriaRole;
+import pageobjects.articles.ArticlesPage;
+import pageobjects.articles.NewArticleModal;
+import pageobjects.flashposts.FlashpostsPage;
 
 public class NavigationBar {
 
@@ -23,7 +26,7 @@ public class NavigationBar {
         this.registerButton = page.locator("#registerBtn");
         this.loginButton= page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Login"));
         this.logoutButton = page.locator("#logoutBtn");
-        this.articlesButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Articles"));
+        this.articlesButton = page.getByTestId("open-articles");
         this.commentsButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Comments"));
         this.addNewArticleButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Add Article"));
         this.flashPostsButton = page.getByRole(AriaRole.BUTTON, new Page.GetByRoleOptions().setName("Flashposts"));
@@ -46,6 +49,21 @@ public class NavigationBar {
         avatarIcon.hover();
         logoutButton.click();
         return new LoginPage(page);
+    }
+
+    public ArticlesPage clickArticlesPageButton(){
+        articlesButton.click();
+        return new ArticlesPage(page);
+    }
+
+    public NewArticleModal clickAddArticleButton(){
+        addNewArticleButton.click();
+        return new NewArticleModal(page);
+    }
+
+    public FlashpostsPage clickFlashpostsPageButton(){
+        flashPostsButton.click();
+        return new FlashpostsPage(page);
     }
 
 
