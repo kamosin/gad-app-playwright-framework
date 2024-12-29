@@ -22,7 +22,7 @@ public class ArticlesService {
         return requestManager.post(articlesEndpoint, articleRequest);
     }
 
-    public int getNumberOfArticles(String baseURI){
-        return JsonParser.parseString(getArticles().text()).getAsJsonObject().getAsJsonArray().size();
+    public int getNumberOfArticles(){
+        return JsonParser.parseString(getArticles().text()).getAsJsonArray().size();
     }
 }
